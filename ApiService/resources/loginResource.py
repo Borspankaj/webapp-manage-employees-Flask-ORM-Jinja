@@ -12,7 +12,7 @@ class Login(Resource) :
         parser.add_argument('password', type=str, required=True, help='Password cannot be blank')
         args = parser.parse_args()
         email=args['email']
-        user = Auth.query.filter_by(email).first()
+        user = Auth.query.filter_by(email = email).first()
         if user and args['password'] == user.password :
             access_token = create_access_token(identity=email)
             return {'message': 'Login successful' , 
