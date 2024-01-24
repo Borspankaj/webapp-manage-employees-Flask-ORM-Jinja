@@ -3,7 +3,7 @@ from extensions import db
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from resources.user import UserResource
-from ApiService.resources.auth import Login
+from resources.auth import AuthResource
 
 def create_app() :
     app = Flask(__name__)
@@ -21,7 +21,7 @@ def register_extensions(app) :
 
 def register_api(api) :
     api.add_resource(UserResource, '/api/user' , '/api/user/<string:user_email>')
-    api.add_resource(Login , '/api/login')
+    api.add_resource(AuthResource , '/api/login')
 
 if __name__ == "__main__" :
 
