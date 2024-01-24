@@ -8,6 +8,7 @@ from resources.auth import AuthResource
 def create_app() :
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////emp.db'
+    app.config['JWT_SECRET_KEY'] = 'my-key-qwer4321'
     register_extensions(app)
     return app
 
@@ -21,9 +22,9 @@ def register_extensions(app) :
 
 def register_api(api) :
     api.add_resource(UserResource, '/api/user' , '/api/user/<string:user_email>')
-    api.add_resource(AuthResource , '/api/login')
+    api.add_resource(AuthResource , '/api/login' , '/api/logni/<string:user_email>')
 
 if __name__ == "__main__" :
 
     app = create_app()
-    app.run(debug=True)
+    app.run(debug=True , port = 4000)

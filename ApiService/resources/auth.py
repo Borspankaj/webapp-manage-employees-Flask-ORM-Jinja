@@ -1,7 +1,9 @@
+from flask import make_response
 from flask_restful import Resource, reqparse
-from extensions import db
 from flask_jwt_extended import create_access_token
+from extensions import db
 from services.auth import AuthService as auth_
+
 class AuthResource(Resource) :
 
     def post(self):
@@ -9,14 +11,15 @@ class AuthResource(Resource) :
         try :
             if auth_.authenticate(request_data) :
                 access_token = create_access_token(identity= request_data['email'])
-                return { 'access_token' : access_token ,
-                        'message' : 'login succesfull'} 
+                response_data = {
+                    'message' : 'login succesfull'
+                }
+                response = make_response(response_data)
+                response.headers['Authorization'] = f'Bearer {access_token}'
+                return response
             else :
                 return { 'message' : 'incorrect email/password'}
         except Exception as e :
+            print(e)
             return { 'message' : 'error occured'}
-    
 
-
-
-        

@@ -7,13 +7,11 @@ class UserService :
         try :
             user = User.query.filter_by(email = user_email).first()
             return ud.get_user_data(user)
-
         except Exception as e:
             print(f"Error: {e}")
             return None
         
     def create_user(request_data) :
-
         new_user = User(
             first_name = request_data["first_name"] ,
             last_name=request_data['last_name'],

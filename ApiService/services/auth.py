@@ -6,7 +6,6 @@ class AuthService :
         try :
             user_email = request_data['email']
             user = User.query.filter_by(email = user_email).first()
-
             return user.check_password(request_data['password']) 
         except Exception as e :
             return  None
