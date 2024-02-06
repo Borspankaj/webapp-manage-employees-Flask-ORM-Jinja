@@ -4,10 +4,11 @@ from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from resources.user import UserResource
 from resources.auth import AuthResource
+from resources.search import SearchResource
 
 def create_app() :
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////emp.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///my_emp.db'
     app.config['JWT_SECRET_KEY'] = 'my-key-qwer4321'
     register_extensions(app)
     return app
@@ -22,7 +23,8 @@ def register_extensions(app) :
 
 def register_api(api) :
     api.add_resource(UserResource, '/api/user' , '/api/user/<string:user_email>')
-    api.add_resource(AuthResource , '/api/login' , '/api/logni/<string:user_email>')
+    api.add_resource(AuthResource , '/api/login' , '/api/login/<string:user_email>')
+    api.add_resource(SearchResource , '/api/employees' )
 
 if __name__ == "__main__" :
 

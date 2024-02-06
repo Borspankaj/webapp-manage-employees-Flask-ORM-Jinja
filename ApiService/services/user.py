@@ -3,6 +3,27 @@ from extensions import db
 from dto.user import UserDto as ud
 
 class UserService :
+    def get_employees() :
+        try:
+            users = User.query.all()
+            user_data_list = [ud.get_user_data(user) for user in users if user.role == 'EMP']
+            return user_data_list
+        except Exception as e:
+            print(f"Error: {e}")
+            return []
+       
+    def search_employees(keyword) :
+        try :
+            users = User.query.all() 
+            user_data_list = [ud.get_user_data(user) for user in users if user.role == 'EMP' and 
+            ( user.first_name == keyword or 
+             user.last_name == keyword or
+             keyword in user.address ) ]
+            return user_data_list
+        except Exception as e :
+            print(e)
+            return []
+        
     def get_user(user_email) :
         try :
             user = User.query.filter_by(email = user_email).first()
@@ -19,7 +40,7 @@ class UserService :
             phone_number=request_data['phone_number'],
             # dob=datetime.strptime(args['dob'], '%Y-%m-%d').date(),
             address=request_data['address'],
-            role = request_data['role'] , 
+            role = request_data['role'] if request_data['role'] == 'ADMIN' else 'EMP', 
         )
         new_user.set_password(request_data['password'])
         try :
@@ -44,7 +65,6 @@ class UserService :
         # employee.dob = datetime.strptime(args['dob'], '%Y-%m-%d').date()
         user.address = request_data['address']
         user.role = request_data['role']
-        user.set_password(request_data['password'])
         try :
             db.session.commit()
         except :

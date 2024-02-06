@@ -6,5 +6,7 @@ class UserDto :
                 'email': user.email,
                 'phone_number': user.phone_number,
                 # 'dob': employee.dob,
-                'address': user.address
-            }
+                'address': user.address ,
+                'role' : user.role
+                
+                }
