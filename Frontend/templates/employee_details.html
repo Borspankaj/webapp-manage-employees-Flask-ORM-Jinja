@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Details</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/employee_details_style.css') }}">
+</head>
+<body>
+  <div class="employee-details-wrapper">
+    <h1>{{ employee_details['first_name'] }} {{ employee_details['last_name'] }}</h1>
+    <p>Email: {{ employee_details['email'] }}</p>
+
+    {% if is_admin %}
+      <div class="admin-buttons">
+        <form action="{{ url_for('admin.update_employee', emp_email=employee_details['email']) }}" method="get">
+          <button class="edit-btn" type="submit">Edit</button>
+        </form>
+
+        <form action="{{ url_for('admin.delete_employee', emp_email=employee_details['email']) }}" method="post">
+          <button class="delete-btn" type="submit">Delete</button>
+        </form>
+      </div>
+    {% endif %}
+  </div>
+  {% if error_message %}
+    <div class="error-message">
+      {{ error_message }}
+    </div>
+  {% endif %}
+</body>
+</html>

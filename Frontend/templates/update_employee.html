@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Employee</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/update_employee_style.css') }}">
+</head>
+<body>
+  <div class="edit-employee-wrapper">
+    <h1>Edit Employee</h1>
+    <form method="post">
+        {{ form.hidden_tag() }}
+
+        <label for="{{ form.first_name.id }}">First Name:</label>
+        {{ form.first_name(class="form-control") }}
+
+        <label for="{{ form.last_name.id }}">Last Name:</label>
+        {{ form.last_name(class="form-control") }}
+
+        <label for="{{ form.email.id }}">Email:</label>
+        {{ form.email(class="form-control") }}
+
+        <label for="{{ form.phone_number.id }}">Phone Number:</label>
+        {{ form.phone_number(class="form-control") }}
+
+        <label for="{{ form.role.id }}">Role:</label>
+        {{ form.role(class="form-control") }}
+
+        <label for="{{ form.address.id }}">Address:</label>
+        {{ form.address(class="form-control") }}
+
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+  </div>
+  {% if error_message %}
+    <div class="error-message">
+      {{ error_message }}
+    </div>
+  {% endif %}
+</body>
+</html>

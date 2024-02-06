@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Management</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage_style.css') }}">
+</head>
+<body>
+  <div class="search-form">
+    <form action="{{ url_for('routes.search_employees') }}" method="get">
+      <label for="search">Search:</label>
+      <input type="text" id="search" name="keyword" placeholder="Enter keyword">
+      <button type="submit">Search</button>
+    </form>
+
+    {% if is_admin %}
+      <form action="{{ url_for('admin.add_employee') }}" method="get">
+        <button class="add-btn" type="submit">Add Employee</button>
+      </form>
+    {% endif %}
+  </div>
+
+  <h1>Employees</h1>
+  <ol class="employee-list">
+    {% for employee in emp_list %}
+      <li style="--accent-color:#7289da">
+        <div class="icon"><i class="fas fa-user"></i></div>
+        <div class="title">{{ employee['first_name'] }}</div>
+        <div class="descr">{{ employee['email'] }}</div>
+        <form action="{{ url_for('routes.employee_details', emp_email=employee['email']) }}" method="get">
+          <button class="details-btn" type="submit">Get Details</button>
+        </form>
+      </li>
+    {% endfor %}
+
+    <form action="{{ url_for('routes.logout') }}" method="get">
+      <button class="logout-btn" type="submit">Logout</button>
+    </form>
+  </ol>
+  {% if error_message %}
+    <div class="error-message">
+      {{ error_message }}
+    </div>
+  {% endif %}
+</body>
+</html>
